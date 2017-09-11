@@ -1,14 +1,19 @@
 const { resolve } = require('path')
 
+const setStatus = errorStatus => {
+  if (errorStatus) return 500
+  return errorStatus >= 600 ? 403 : errorStatus
+}
+
 module.exports = (opts = {}) => {
   return async function errorHandler(ctx, next) {
     try {
       await next()
     } catch (error) {
-      ctx.status = error.status || 500
+      ctx.status = 200
       ctx.body = {
-        success: false,
-        status: ctx.status,
+        success: true,
+        status: error.status,
         message: error.message,
         data: {}
       }
