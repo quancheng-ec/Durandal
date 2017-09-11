@@ -1,6 +1,6 @@
 {
   "name": "@quancheng/durandal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a node microservice framework",
   "main": "index.js",
   "scripts": {
