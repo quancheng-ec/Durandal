@@ -3,7 +3,7 @@ module.exports = (opts = {}) => {
     await next()
     ctx.body = {
       success: true,
-      status: 0,
+      code: 0,
       data: ctx.body
     }
   }

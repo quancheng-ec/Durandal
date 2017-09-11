@@ -15,6 +15,7 @@ const midHealthCheck = require('./middlewares/healthCheck')
 const midStore = require('./middlewares/store')
 const midSaluki2 = require('./middlewares/saluki2')
 const midJwt = require('./middlewares/jwt')
+const midBizThrow = require('./middlewares/bizThrow')
 const setConfig = require('./lib/setConfig')
 const { initRouter, unhandledRoute } = require('./lib/router')
 
@@ -38,6 +39,7 @@ class App extends EventEmitter {
     app.context.config = config
 
     app.use(midErrHandler(config))
+    app.use(midBizThrow())
     app.use(midStore(app, config))
     app.use(midSaluki2(app, config))
     app.use(midJwt(app, config, noAuthRoutes))
