@@ -51,7 +51,7 @@ exports.initRouter = (opts = {}) => {
         config.url,
         ...beforeRoute,
         async (ctx, next) => {
-          ctx.body = await controller(ctx, ctx.services)
+          await controller(ctx, ctx.services)
           await next()
         },
         logRouter('leave route')
