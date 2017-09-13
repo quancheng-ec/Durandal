@@ -17,6 +17,7 @@ const midSaluki2 = require('./middlewares/saluki2')
 const midJwt = require('./middlewares/jwt')
 const midBizThrow = require('./middlewares/bizThrow')
 const midResSuccess = require('./middlewares/resSuccess')
+const midVilidator = require('./middlewares/validator')
 const setConfig = require('./lib/setConfig')
 const { initRouter, unhandledRoute } = require('./lib/router')
 
@@ -40,7 +41,8 @@ class App extends EventEmitter {
     app.context.config = config
 
     app.use(midErrHandler(config))
-    app.use(midBizThrow())
+    app.use(midBizThrow(config))
+    app.use(midVilidator(config))
     app.use(midStore(app, config))
     app.use(midSaluki2(app, config))
     app.use(midJwt(app, config, noAuthRoutes))
@@ -49,9 +51,9 @@ class App extends EventEmitter {
       textLimit: '10mb'
     }))
     app.use(midResSuccess(config))
-    app.use(midRender())
-    app.use(midResFormatter())
-    app.use(midHealthCheck())
+    app.use(midRender(config))
+    app.use(midResFormatter(config))
+    app.use(midHealthCheck(config))
     app.use(unhandledRoute)
     app.use(router.routes())
     app.use(router.allowedMethods({ throw: true }))
