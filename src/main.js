@@ -16,7 +16,7 @@ const midStore = require('./middlewares/store')
 const midSaluki2 = require('./middlewares/saluki2')
 const midJwt = require('./middlewares/jwt')
 const midBizThrow = require('./middlewares/bizThrow')
-const midResSuccess = require('./middlewares/resSuccess')
+const midRespond = require('./middlewares/respond')
 const midVilidator = require('./middlewares/validator')
 const setConfig = require('./lib/setConfig')
 const { initRouter, unhandledRoute } = require('./lib/router')
@@ -50,7 +50,7 @@ class App extends EventEmitter {
       jsonLimit: '10mb',
       textLimit: '10mb'
     }))
-    app.use(midResSuccess(config))
+    app.use(midRespond(config))
     app.use(midRender(config))
     app.use(midResFormatter(config))
     app.use(midHealthCheck(config))
