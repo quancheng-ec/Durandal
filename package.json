@@ -25,6 +25,7 @@
     "koa-router": "^7.2.1",
     "koa-session": "^5.5.0",
     "lodash.isfunction": "^3.0.8",
+    "lodash.set": "^4.3.2",
     "pug": "^2.0.0-rc.3",
     "validate.js": "^0.11.1",
     "validator": "^8.2.0",

@@ -8,6 +8,7 @@ const debug = require('debug')('durandal:application')
 const Koa = require('koa')
 const koaBodyParser = require('koa-bodyparser')
 
+const mergeConfig = require('./lib/mergeConfig')
 const midErrHandler = require('./middlewares/errHandler')
 const midRender = require('./middlewares/render')
 const midResFormatter = require('./middlewares/resFormatter')
@@ -18,7 +19,6 @@ const midJwt = require('./middlewares/jwt')
 const midBizThrow = require('./middlewares/bizThrow')
 const midRespond = require('./middlewares/respond')
 const midVilidator = require('./middlewares/validator')
-const setConfig = require('./lib/setConfig')
 const { initRouter, unhandledRoute } = require('./lib/router')
 
 class App extends EventEmitter {
@@ -30,7 +30,7 @@ class App extends EventEmitter {
   }
 
   initApp(config) {
-    config = setConfig(this, config)
+    config = mergeConfig(config)
 
     const app = new Koa()
     const { router, noAuthRoutes } = initRouter(config.route)
