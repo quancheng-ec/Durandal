@@ -12,9 +12,15 @@ const $route = new Map()
 
 validate.validators.presence.options = { message: "can't be empty" }
 
-const logRouter = ctrl => {
+const logRouter = (ctrl, needDetail = false) => {
   return async (ctx, next) => {
-    debug(`${ctrl}: ${ctx.url}`)
+    console.log('')
+    debug(`${ctrl}: ${ctx.path}`)
+    if (needDetail) {
+      debug(`query:`, ctx.querystring)
+      debug(`data:`, ctx.request.body)
+    }
+    console.log('')
     await next()
   }
 }
@@ -45,7 +51,7 @@ exports.initRouter = (opts = {}) => {
 
     for (let [controller, config] of $route) {
       if (config.skipAuth) noAuthRoutes.push(globalPrefix + config.url)
-      const beforeRoute = opts.before ? [logRouter('enter route'), opts.before.bind(config), ...config.middlewares] : config.middlewares
+      const beforeRoute = opts.before ? [logRouter('enter route', true), opts.before.bind(config), ...config.middlewares] : config.middlewares
       const args = [
         config.target.constructor.name + '.' + config.name,
         config.url,

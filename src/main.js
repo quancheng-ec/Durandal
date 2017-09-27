@@ -69,6 +69,12 @@ class App extends EventEmitter {
 
 process.on('uncaughtException', err => { console.dir(err) })
 
+process.on('exit', info => { console.dir(info) })
+
+process.on('unhandledRejection', (reason, p) => {
+  console.error("Possibly Unhandled Rejection at: Promise ", p, " reason: ", reason)
+});
+
 module.exports = exports = config => {
   const app = new App(config)
   return app
