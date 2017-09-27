@@ -67,6 +67,8 @@ class App extends EventEmitter {
   }
 }
 
+process.on('uncaughtException', err => { console.dir(err) })
+
 module.exports = exports = config => {
   const app = new App(config)
   return app

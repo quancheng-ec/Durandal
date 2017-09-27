@@ -1,6 +1,6 @@
 {
   "name": "@quancheng/durandal",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "a node microservice framework",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@quancheng/saluki2-node": "^1.2.2",
+    "@quancheng/saluki2-node": "^1.2.3",
     "debug": "^3.0.1",
     "fs-extra": "^4.0.1",
     "jsonwebtoken": "^8.0.0",
