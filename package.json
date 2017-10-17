@@ -4,14 +4,13 @@
   "description": "a node microservice framework",
   "main": "index.js",
   "scripts": {
-    "example": "babel-node example/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.quancheng-ec.com:shared/Durandal.git"
+    "url": "git@gitlab.quancheng-ec.com:QCFE/Durandal.git"
   },
-  "author": "",
+  "author": "QCFE",
   "license": "ISC",
   "dependencies": {
     "@quancheng/saluki2-node": "^1.2.4",
@@ -39,5 +38,8 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "eslint": "^4.6.1"
+  },
+  "engines": {
+    "node": ">=7.0"
   }
 }
