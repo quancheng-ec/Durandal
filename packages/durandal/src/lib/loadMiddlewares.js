@@ -1,6 +1,6 @@
-import { readdirSync } from 'fs'
-import { resolve } from 'path'
-import compose from 'koa-compose'
+const { readdirSync } = require('fs')
+const { resolve } = require('path')
+const compose = require('koa-compose')
 module.exports = exports = function loadMiddleware (app, config) {
   if (!config.middleware || !config.middleware.path) return
   try {
