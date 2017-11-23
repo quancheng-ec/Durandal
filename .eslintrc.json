@@ -1,0 +1,13 @@
+{
+  "env": {
+    "node": true,
+    "commonjs": true,
+    "es6": true
+  },
+  "extends": "standard",
+  "plugins": ["node"],
+  "rules": {
+    "array-element-newline": ["error", { "minItems": 2 }],
+    "array-bracket-newline": ["error", { "multiline": true, "minItems": 2 }]
+  }
+}

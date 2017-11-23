@@ -1,0 +1,18 @@
+{
+  "name": "@quancheng/durandal-saluki",
+  "version": "1.0.0",
+  "description": "saluki plugin for durandal",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "zephyr",
+  "license": "ISC",
+  "dependencies": {
+    "consul": "^0.30.0",
+    "debug": "^3.1.0",
+    "glob": "^7.1.2",
+    "grpc": "^1.1.2",
+    "lodash": "^4.17.4"
+  }
+}
