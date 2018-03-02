@@ -4,9 +4,10 @@ const grpc = require('grpc')
 const glob = require('glob')
 const _ = require('lodash')
 const consul = require('./consul')
-const debug = require('debug')('pomjs-grpc')
+const zipkinGrpcWrap = require('./zipkinInstrument')
+const debug = require('debug')('durandal:plugin-saluki')
 
-var grpcOptions = {
+const grpcOptions = {
   'grpc.ssl_target_name_override': 'grpc',
   'grpc.default_authority': 'grpc'
 }
@@ -100,15 +101,6 @@ async function initConsuls (groups) {
  * @returns {*}
  */
 function getClient (api, index) {
-  // if (api.target) {
-  //   if (api.client) {
-  //     return api.client;
-  //   }
-  //   const client = new api._grpc(api.target, combinedCreds, grpcOptions);
-  //   api.client = client;
-  //   return api.client;
-  // }
-
   const provider = consul.getService(api)
   if (!provider) {
     console.error('the service provider not found', api.name)
@@ -118,19 +110,12 @@ function getClient (api, index) {
   const providerHosts = []
   provider.forEach(function (s) {
     // 匹配provide和当前的service声明，如果相同则记录下来
-    if (
-      (s.group || 'default') === api.group &&
-      (s.version || '1.0.0') === api.version
-    ) {
+    if ((s.group || 'default') === api.group && (s.version || '1.0.0') === api.version) {
       providerHosts.push(s.host)
     }
   })
   if (providerHosts.length === 0) {
-    console.error(
-      'the service provider not found',
-      api,
-      'please check saluki service config'
-    )
+    console.error('the service provider not found', api, 'please check saluki service config')
     return null
   }
   // 如果有重试行为，清除 client连接缓存
@@ -155,22 +140,23 @@ function getClient (api, index) {
 }
 
 function wrapService (api) {
-  const methods = api._grpc.service.children
+  const methods = api._grpc.service
   const service = {}
-  methods.forEach(function (ins) {
-    service[ins.name] = promising(api, ins.name)
+  Object.keys(methods).forEach(function (name) {
+    service[name] = zipkinGrpcWrap(promising(api, name), {
+      serviceName: 'sparta-datacenter',
+      remoteRpcName: name
+    })
   })
   return service
 }
 
 function promising (api, name) {
   const invoke = function (req, metadata, callback, resolve, reject, index) {
-    const customeMetadata = new grpc.Metadata()
     let client = getClient(api, index)
-    Object.keys(metadata).forEach(k => customeMetadata.set(k, metadata[k]))
-    debug(`request api: ${api}`)
-    debug(`request body data: ${req}`)
-    debug(`request metada: ${metadata}`)
+    debug(`request grpc service: ${api.name}`)
+    debug('request body data')
+    debug(req)
     client[name](req, metadata, function (err, resp) {
       if (err) {
         const reqstr = JSON.stringify(req)
@@ -202,7 +188,7 @@ function promising (api, name) {
 
   return function (req, metadata = {}, callback) {
     let index = 0
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       invoke(req, metadata, callback, resolve, reject, index)
     })
   }

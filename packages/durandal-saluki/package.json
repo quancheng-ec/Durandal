@@ -12,7 +12,11 @@
     "consul": "^0.30.0",
     "debug": "^3.1.0",
     "glob": "^7.1.2",
-    "grpc": "1.1.2",
-    "lodash": "^4.17.4"
+    "grpc": "^1.7.3",
+    "lodash": "^4.17.4",
+    "zipkin": "^0.6.1",
+    "zipkin-context-cls": "^0.6.1",
+    "zipkin-instrumentation-grpc": "^0.0.7",
+    "zipkin-transport-http": "^0.6.1"
   }
 }

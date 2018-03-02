@@ -1,0 +1,23 @@
+{
+  "name": "durandal-zipkin",
+  "version": "1.0.0",
+  "description": "zipkin tools for durandal",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "durandal",
+    "zipkin",
+    "trace",
+    "microservice"
+  ],
+  "author": "zephyr",
+  "license": "ISC",
+  "dependencies": {
+    "grpc": "^1.8.0",
+    "zipkin": "^0.6.1",
+    "zipkin-context-cls": "^0.6.1",
+    "zipkin-transport-http": "^0.6.1"
+  }
+}
